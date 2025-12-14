@@ -11,11 +11,33 @@ from datetime import datetime, timedelta
 import json
 import os
 
-class VideoCamera(object):
+# =================== WIN FUNCTIOAL =====================
+class VideoCameraWin(object):
     def __init__(self):
         self.video = cv2.VideoCapture(1) 
         if not self.video.isOpened():
             raise IOError("Cannot open USB camera with index 1")
+
+    def __del__(self):
+        self.video.release()
+
+    def get_frame(self):
+        success, image = self.video.read()
+        if not success:
+            return None 
+
+        ret, jpeg = cv2.imencode('.jpg', image)
+        return jpeg.tobytes()
+
+# =======================================================
+
+class VideoCamera(object):
+    def __init__(self):
+        cam_index = int(os.getenv("CAMERA_INDEX", "0"))
+        self.video = cv2.VideoCapture(cam_index)
+
+        if not self.video.isOpened():
+            raise IOError(f"Cannot open USB camera with index {cam_index}")
 
     def __del__(self):
         self.video.release()
@@ -78,7 +100,8 @@ def save_params(path, data):
     except Exception as e:
         raise IOError(f"An unexpected error occurred: {e}")
 
-def readCOM(port="COM4", baudrate=115200, timeout=1):
+# ======================== WIN FUNCTIONAL ==========================
+def readCOMWin(port="COM4", baudrate=115200, timeout=1):
     """Read COM Port"""
     ser = None
     try:
@@ -97,11 +120,33 @@ def readCOM(port="COM4", baudrate=115200, timeout=1):
                 ser.close()
             except:
                 pass
+# ==================================================================
+
+def readCOM(
+    port=None,
+    baudrate=115200,
+    timeout=1
+):
+    port = port or os.getenv("SERIAL_PORT", "/dev/ttyUSB0")
+
+    ser = None
+    try:
+        ser = serial.Serial(port, baudrate, timeout=timeout)
+        time.sleep(1)
+        serial_data = ser.readline().strip().decode("utf-8")
+        return serial_data
+
+    except Exception:
+        return None
+
+    finally:
+        if ser:
+            ser.close()
 
 
 def send_env_params(request):
     """Send params on URL"""
-    port = "COM4"
+    port = "/dev/ttyUSB1/"
     save_path = "app/reports/"
 
     data_string = readCOM(port)
