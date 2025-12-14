@@ -5,6 +5,9 @@ services:
     build: ./backend
     container_name: backend
     restart: always
+      devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/video0:/dev/video0
     expose:
       - "8000"
 
