@@ -1,15 +1,14 @@
-// ================================ MAIN WEBSITE FILE ================================
-// Base dependences import
+// Base Dependences Import
 import React, { useState } from 'react'
 import './App.css'
-// Components import
+// Components Import
 import { useLocalization } from './components/LocalizationContext.jsx';
 import { headerText, textContent } from './components/LanguageContent.jsx';
 import AuthorsContainer from './components/ParticipantListComponent.jsx';
 import VideoStream from './components/VideoStream.jsx';
 import Parameters from './components/Parameters.jsx';
 import BurgerMenu from './components/BurgerMenu.jsx';
-// AOS import
+// AOS Import
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -118,9 +117,9 @@ function page(lang){
       <div id="support-container">
         <p>{textContent[lang][16]}</p>
         <div id="support-refs">
-          <button data-aos="fade-right" data-aos-duration="250" data-aos-offset="70vh" onClick={() => { window.location.href = 'https://kaspi.com/'; }}>Kaspi (For KZ)</button>
-          <button data-aos="fade-up" data-aos-duration="550" data-aos-offset="75vh" onClick={() => { window.location.href = 'https://telegram.com/'; }}>Telegram Bot</button>
-          <button data-aos="fade-left" data-aos-duration="850" data-aos-offset="80vh" onClick={() => { window.location.href = 'https://donations].com/'; }}>Donate (For other countries)</button>
+          <button data-aos="fade-right" data-aos-duration="250" data-aos-offset="70vh" onClick={() => { window.location.href = 'https://kaspi.com/'; }} disabled>Kaspi (For KZ)</button>
+          <button data-aos="fade-up" data-aos-duration="550" data-aos-offset="75vh" onClick={() => { window.location.href = 'https://telegram.org/#bot-id'; }}>Telegram Bot</button>
+          <button data-aos="fade-left" data-aos-duration="850" data-aos-offset="80vh" onClick={() => { window.location.href = 'https://donations].com/'; }} disabled>Donate (For other countries)</button>
         </div>
       </div>
 
