@@ -1,11 +1,15 @@
+// ================================ MAIN WEBSITE FILE ================================
+// Base dependences import
 import React, { useState } from 'react'
 import './App.css'
+// Components import
 import { useLocalization } from './components/LocalizationContext.jsx';
 import { headerText, textContent } from './components/LanguageContent.jsx';
 import AuthorsContainer from './components/ParticipantListComponent.jsx';
 import VideoStream from './components/VideoStream.jsx';
 import Parameters from './components/Parameters.jsx';
 import BurgerMenu from './components/BurgerMenu.jsx';
+// AOS import
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -93,7 +97,7 @@ function page(lang){
       <h2 id="sponsors-anchor">{textContent[lang][12]}</h2>
       <div id="sponsors-container">
         <div className="sponsor-card" data-aos="fade-up-right">
-          <img alt="Dana High School"/>
+          <img src = "public/dana-logo.png" alt="Dana School"/>
           <div>
             <h3 onClick={() => { window.location.href = 'https://danaschool.kz/'; }}>DANA School</h3>
             <p>{textContent[lang][13]}</p>
