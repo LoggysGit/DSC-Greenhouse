@@ -96,14 +96,14 @@ function page(lang){
       <h2 id="sponsors-anchor">{textContent[lang][12]}</h2>
       <div id="sponsors-container">
         <div className="sponsor-card" data-aos="fade-up-right">
-          <img src = "public/dana-logo.png" alt="Dana School"/>
+          <img src = "/dana-logo.png" alt="Dana School"/>
           <div>
             <h3 onClick={() => { window.location.href = 'https://danaschool.kz/'; }}>DANA School</h3>
             <p>{textContent[lang][13]}</p>
           </div>
         </div>
         <div className="sponsor-card" data-aos="fade-up-left">
-        <img alt="databot" src="public/databot-logo.webp" width={"150px"}/>
+        <img alt="databot" src="/databot-logo.webp" width={"150px"}/>
           <div>
             <h3 onClick={() => { window.location.href = 'https://databot.us.com/'; }}>databot <sup>TM</sup></h3>
             <p>{textContent[lang][14]}</p>
@@ -136,7 +136,7 @@ function page(lang){
         <div className="contact-block" id="cb-2">
           <p>DanaSchool Instagramm: <a href="https://instagram.com/dana_school_almaty/">https://instagram.com/dana_school_almaty/</a></p>
           <p>Databot Instagramm: <a href="https://www.instagram.com/databotusa/">https://instagram.com/databotusa/</a></p>
-          <p>DanaSchool website: <a href="https://danaschool.kz">https://danaschool.kz</a></p>
+          <p>DanaSchool website: <a href="https://danaschool.edu.kz">https://danaschool.edu.kz</a></p>
           <p>Databot website: <a href="https://databot.us.com">https://databot.us.com</a></p>
         </div>
       </div>
