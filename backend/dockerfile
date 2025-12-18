@@ -1,10 +1,10 @@
 FROM python:3.12-slim
 
-# Оптимизация Python
+# Python Optimization
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Системные зависимости для OpenCV/камер
+# OpenCV/Cameras
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 \
     libglib2.0-0 \
@@ -12,15 +12,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Кешируем установку библиотек
+# Lib Cache
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
-# Копируем проект
 COPY . .
+
+# RUN python manage.py collectstatic --noinput # Static
 
 EXPOSE 8000
 
-# Рекомендуется добавить --workers 3 для стабильности
-CMD ["gunicorn", "DSC_Greenhouse.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+CMD ["gunicorn", "DSC_Greenhouse.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "1", "--threads", "4", "--worker-class", "gthread"]
