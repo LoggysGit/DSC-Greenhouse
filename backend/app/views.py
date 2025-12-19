@@ -3,73 +3,105 @@ from django.shortcuts import render
 from django.http import StreamingHttpResponse
 from django.http import JsonResponse
 
-import cv2
+from datetime import datetime, timedelta
+
 import time
+import cv2
 
 import serial
-from datetime import datetime, timedelta
 import json
 import os
 
-# =================== WIN FUNCTIOAL =====================
-class VideoCameraWin(object):
-    def __init__(self):
-        self.video = cv2.VideoCapture(1) 
-        if not self.video.isOpened():
-            raise IOError("Cannot open USB camera with index 1")
-
-    def __del__(self):
-        self.video.release()
-
-    def get_frame(self):
-        success, image = self.video.read()
-        if not success:
-            return None 
-
-        ret, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
-
-# =======================================================
-
 class VideoCamera(object):
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(VideoCamera, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self):
-        cam_index = int(os.getenv("CAMERA_INDEX", "0"))
-        self.video = cv2.VideoCapture(cam_index)
+        if self._initialized: return
+        
+        # ГАРАНТИРОВАННО получаем путь к USB устройству
+        device_path = self.get_only_usb_camera_path()
+        
+        if device_path is None:
+            print("CRITICAL ERROR: No USB camera found!")
+            self.video = None
+            return
+
+        # Передаем СТРОКУ (путь), а не число. Это исключает автовыбор вебки.
+        self.video = cv2.VideoCapture(device_path)
+        
+        # Green-remover
+        self.video.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+        self.video.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        self.video.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        self.video.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
         if not self.video.isOpened():
-            raise IOError(f"Cannot open USB camera with index {cam_index}")
+            print(f"Error: Could not open USB camera at {device_path}")
+        else:
+            print(f"Successfully LOCKED to USB camera: {device_path}")
+            self._initialized = True
 
-    def __del__(self):
-        self.video.release()
+    def get_only_usb_camera_path(self):
+        """Look for the first USB camera, ignoring PCI"""
+        base_path = "/dev/v4l/by-path/"
+        if not os.path.exists(base_path):
+            print("Error: /dev/v4l/by-path/ not found. Is v4l-utils installed?")
+            return None
+        
+        # Список всех устройств по их физическому пути
+        devices = os.listdir(base_path)
+        
+        # Фильтруем: берем только те, где есть 'usb', и ПЕРВЫЙ интерфейс (index0)
+        # index1 и прочие — это обычно метаданные, они не открываются как видео
+        usb_devices = [
+            os.path.join(base_path, d) 
+            for d in devices 
+            if "usb" in d.lower() and "index0" in d.lower()
+        ]
+        
+        if usb_devices:
+            # Сортируем, чтобы всегда брать одно и то же устройство
+            return sorted(usb_devices)[0]
+        
+        return None
 
     def get_frame(self):
+        if not self.video or not self.video.isOpened():
+            return None
+        
         success, image = self.video.read()
-        if not success:
+        if not success or image is None:
             return None 
 
-        ret, jpeg = cv2.imencode('.jpg', image)
+        ret, jpeg = cv2.imencode('.jpg', image, [int(cv2.IMWRITE_JPEG_QUALITY), 85])
         return jpeg.tobytes()
+
+# Инициализация
+global_camera = VideoCamera()
 
 def gen(camera):
-    """Get camera frames"""
     while True:
+        if not camera.video:
+            time.sleep(1)
+            continue
         frame = camera.get_frame()
         if frame is not None:
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         else:
-            time.sleep(0.1) 
+            time.sleep(0.05)
 
 def video_feed(request):
-    """Transmit video"""
-    try:
-        cam = VideoCamera()
-        return StreamingHttpResponse(
-            gen(cam),
-            content_type='multipart/x-mixed-replace; boundary=frame'
-        )
-    except IOError as e:
-        return StreamingHttpResponse(f"Error: {e}", status=500)
+    return StreamingHttpResponse(
+        gen(global_camera),
+        content_type='multipart/x-mixed-replace; boundary=frame'
+    )
     
 # ===========================================================
 
@@ -79,7 +111,7 @@ def save_params(path, data):
 
     period_min = 60
 
-    # Имя файла: "Report-2025-01-01-14_00.json"
+    #"Report-2025-01-01-14_00.json"
     timestamp = datetime.now().strftime("Report-%Y-%m-%d-%H_%M")
     file_name = f"{timestamp}.json"
     full_path = os.path.join(path, file_name)
@@ -100,27 +132,7 @@ def save_params(path, data):
     except Exception as e:
         raise IOError(f"An unexpected error occurred: {e}")
 
-# ======================== WIN FUNCTIONAL ==========================
-def readCOMWin(port="COM4", baudrate=115200, timeout=1):
-    """Read COM Port"""
-    ser = None
-    try:
-        ser = serial.Serial(port=port, baudrate=baudrate, timeout=timeout)
-        time.sleep(1)
-
-        serial_data = ser.readline().strip().decode("utf-8")
-        return serial_data
-
-    except Exception as e:
-        return None
-
-    finally:
-        if ser is not None:
-            try:
-                ser.close()
-            except:
-                pass
-# ==================================================================
+last_string_buffer = ""
 
 def readCOM(
     port=None,
@@ -137,7 +149,7 @@ def readCOM(
         return serial_data
 
     except Exception:
-        return None
+        return last_string_buffer
 
     finally:
         if ser:
@@ -146,18 +158,18 @@ def readCOM(
 
 def send_env_params(request):
     """Send params on URL"""
-    port = "/dev/ttyUSB1/"
-    save_path = "app/reports/"
+    port = "/dev/ttyUSB0"
+    save_path = "./reports/"
 
     data_string = readCOM(port)
 
     #save_params(save_path, data_string)
 
-    if not data_string:
-        return JsonResponse({"error": "No data"}, status=500)
+    #if not data_string: return JsonResponse({"error": "No data"}, status=500)
 
     try:
-        import json
+        last_string_buffer = data_string
+    
         parsed = json.loads(data_string)
         return JsonResponse(parsed)
 
