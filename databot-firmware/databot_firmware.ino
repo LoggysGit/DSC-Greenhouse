@@ -2,7 +2,7 @@
 
 #define DATA_TRANSMIT_DELAY 1000
 
-//Adafruit_NeoPixel RGBled = Adafruit_NeoPixel(3, LED_PIN, NEO_GRB + NEO_KHZ800); // RGB Led (Doesn't use in code)
+Adafruit_NeoPixel RGBled = Adafruit_NeoPixel(3, LED_PIN, NEO_GRB + NEO_KHZ800); // RGB Led
 
 // SENSORS
 SGP30 airSensor;
@@ -16,6 +16,13 @@ void setup(){
   Wire.setClock(400000);
 
   //Serial.println("POWER ON");
+
+  // LED indication to know that databot is ON
+  RGBled.setPixelColor(0, RGBled.Color(0, 0, 255));  
+  RGBled.show();
+  delay(100);
+  RGBled.setPixelColor(0, RGBled.Color(0, 0, 0));
+  RGBled.show();
 
   tempSensor.begin();
 
