@@ -33,67 +33,59 @@ const labels =[
 
 const Parameters = () => {
     const { local } = useLocalization();
-    let lang_id;
-    
-    if  (local === "Eng") lang_id = 0;
-    else if (local === "Rus") lang_id = 1;
-    else lang_id = 2;
+    let lang_id = local === "Eng" ? 0 : local === "Rus" ? 1 : 2;
 
-    const paramPoint = "/api/databot_probe/"; //Django data URL
+    const paramPoint = "/api/databot_probe/";
 
+    // Состояние хранит последние удачные данные
     const [params, setParams] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    
+    const isValidData = (obj) => {
+        if (!obj || typeof obj !== 'object') return false;
+        const requiredKeys = ['temp', 'light', 'humid', 'sound', 'voc', 'co2'];
+        return requiredKeys.every(key => 
+            obj.hasOwnProperty(key) && 
+            typeof obj[key] === 'number' && 
+            !isNaN(obj[key])
+        );
+    };
 
-    // Parsing - we must do it every 1 second (WE GET LAST STRING FROM URL)
     useEffect(() => {
         const interval = setInterval(async () => {
-            let lastLine;
-    
             try {
                 const response = await fetch(paramPoint);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-    
+                if (!response.ok) throw new Error("Server error");
+
                 const urlData = await response.text();
-    
                 const lines = urlData.trim().split(/\r?\n/);
-                const validLines = lines.filter(line => line.trim().length > 0);
-    
-                if (validLines.length === 0) {
-                    throw new Error("Received empty response from the server.");
-                }
-    
-                lastLine = validLines[validLines.length - 1];
-                //console.log(lastLine);
-    
+                if (lines.length === 0) return;
+
+                const lastLine = lines[lines.length - 1];
                 const parsedObject = JSON.parse(lastLine);
-                setParams(parsedObject);
-                setError(null);
-    
+
+                // ОБНОВЛЯЕМ только если данные валидны. Если данные битые, setParams не вызывается, на экране остается старое состояние
+                if (isValidData(parsedObject)) {
+                    setParams(parsedObject);
+                }
             } catch (err) {
-                console.error(`Failed to fetch or parse JSON data in ${lastLine}:`, err);
-                setError(err.message);
+                // В случае ошибки (500, пустой ответ, битый JSON) просто ничего не делаем. React сохранит последнее валидное состояние params в памяти.
+                console.log("Waiting for stable data flow...");
             }
         }, 1000);
-    
+
         return () => clearInterval(interval); 
     }, []);
-    
 
-    if (isLoading) {
-        //return <div id="parameters"><p>Loading sensor data...</p></div>;
-    }
-    if (error) {
-        //return <div id="parameters"><p style={{ color: 'red' }}>Error fetching data: {error}</p></div>;
-    }
+    // Если данных НИ РАЗУ еще не было (самый первый запуск)
     if (!params) {
-        return <div id="parameters"><p>No data available to display.</p></div>;
+        return (
+            <div id="parameters">
+                <p>Initializing sensors...</p>
+            </div>
+        );
     }
 
-    //<p>{labels[lang_id][2]}: {params.col}</p>
-
+    // Как только данные появились один раз, этот блок будет висеть всегда. Если новые данные не приходят (ошибка 500 или битый JSON), здесь просто будут отображаться последние корректные цифры.
     return (
         <div id="parameters">
             <p>{labels[lang_id][0]}: {params.temp}°C</p>
