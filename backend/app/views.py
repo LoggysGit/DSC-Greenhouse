@@ -132,11 +132,12 @@ def readCOM(port=None, baudrate=115200, timeout=1):
 
     except Exception: return last_string_buffer # Return latest successful data to avoid output interrupts
 
-    finally: if ser: ser.close() # Release port on exit
+    finally: 
+        if ser: ser.close() # Release port on exit
 
 # === Main function === #
 bot_port = "/dev/ttyUSB0"
-save_path = "reports/"
+save_path = f"reports/"
 def send_env_params(request):
     """Send params on URL"""
     global bot_port, save_path
