@@ -1,0 +1,8 @@
+=== GET STARTED ===
+Install zrok: curl -sSf https://get.openziti.io/install.bash | sudo bash -s zrok
+Stop Container: sudo docker compose down
+Stop & Clear: sudo docker compose down; sudo docker prune -f
+Resolve Frontend: cd frontend/; sudo rm dist/; npm run build; cd ..
+Build Container: sudo docker compose build --no-cache
+Start Container: sudo docker compose up -d
+Logs: sudo docker compose logs (frontend/backend/zrok_tunnel)
