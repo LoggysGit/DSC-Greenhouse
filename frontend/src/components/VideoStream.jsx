@@ -1,7 +1,7 @@
 import React from 'react';
 
 const VideoStream = () => {
-  const streamUrl = "/api/video_stream/"; //Django stream URL
+  const streamUrl = "https://dscgapi.share.zrok.io/video_stream/"; //Django stream URL
 
   return (
     <div>
