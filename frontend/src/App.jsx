@@ -98,7 +98,7 @@ function page(lang){
         <div className="sponsor-card" data-aos="fade-up-right">
           <img src = "./dana-logo.png" alt="Dana School"/>
           <div>
-            <h3 onClick={() => { window.location.href = 'https://danaschool.kz/'; }}>DANA School</h3>
+            <h3 onClick={() => { window.location.href = 'https://danaschool.edu.kz/'; }}>DANA School</h3>
             <p>{textContent[lang][13]}</p>
           </div>
         </div>
