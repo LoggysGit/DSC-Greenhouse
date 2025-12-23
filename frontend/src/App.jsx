@@ -117,9 +117,9 @@ function page(lang){
       <div id="support-container">
         <p>{textContent[lang][16]}</p>
         <div id="support-refs">
-          <button data-aos="fade-right" data-aos-duration="250" data-aos-offset="70vh" onClick={() => { window.location.href = 'https://kaspi.kz/'; }} disabled>Kaspi (For KZ)</button>
+          
           <button data-aos="fade-up" data-aos-duration="550" data-aos-offset="75vh" onClick={() => { window.location.href = 'https://t.me/dsc_greeenhouse_feedback_bot'; }}>Telegram Bot</button>
-          <button data-aos="fade-left" data-aos-duration="850" data-aos-offset="80vh" onClick={() => { window.location.href = 'https://donationalerts.com/'; }} disabled>Donate (For other countries)</button>
+          
         </div>
       </div>
 
@@ -128,16 +128,16 @@ function page(lang){
       <h2 id="contacts-anchor">{textContent[lang][17]}</h2>
       <div id="contacts-container" data-aos="fade-up" data-aos-offset="404013423413400%">
         <div className="contact-block" id="cb-1">
-          <p>Vladimyr S: <a>+49 1511 4818004</a></p>
-          <p>Aynash K: <a>+7 775 712 9560</a></p>
-          <p>Albert M: <a>+7 707 603 4858</a></p>
-          <p>Yaroslav K: <a>+7 747 137 3724</a></p>
+          <p>Vladimyr S: <a href="https://instagram.com/edu.projekt">edu.projekt</a></p>
+          <p>Telegram Bot: <a href="https://t.me/dsc_greeenhouse_feedback_bot">DCSGreenhouseBot</a></p>
+          <p>Made via <a href="https://github.com">GitHub</a></p>
+          <p>DatabotDANA Team</p>
         </div>
         <div className="contact-block" id="cb-2">
-          <p>DanaSchool Instagramm: <a href="https://instagram.com/dana_school_almaty/">https://instagram.com/dana_school_almaty/</a></p>
-          <p>Databot Instagramm: <a href="https://www.instagram.com/databotusa/">https://instagram.com/databotusa/</a></p>
-          <p>DanaSchool website: <a href="https://danaschool.edu.kz">https://danaschool.edu.kz</a></p>
-          <p>Databot website: <a href="https://databot.us.com">https://databot.us.com</a></p>
+          <p>DanaSchool Instagramm: <a href="https://instagram.com/dana_school_almaty/">dana_school_almaty</a></p>
+          <p>Databot Instagram: <a href="https://instagram.com/databotusa/">databotusa</a></p>
+          <p>DanaSchool website: <a href="https://danaschool.edu.kz">danaschool.edu.kz</a></p>
+          <p>Databot website: <a href="https://databot.us.com">databot.us.com</a></p>
         </div>
       </div>
 
@@ -158,3 +158,6 @@ function App() {
 }
 
 export default App
+
+//<button data-aos="fade-right" data-aos-duration="250" data-aos-offset="70vh" onClick={() => { window.location.href = 'https://kaspi.kz/'; }} disabled>Kaspi (For KZ)</button>
+//<button data-aos="fade-left" data-aos-duration="850" data-aos-offset="80vh" onClick={() => { window.location.href = 'https://donationalerts.com/'; }} disabled>Donate (For other countries)</button>
