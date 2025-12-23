@@ -75,7 +75,7 @@ const Parameters = () => {
     if (!params) {
         return (
             <div id="parameters">
-                <p>Initializing sensors...</p>
+                <p>Initializing sensor...</p>
             </div>
         );
     }
