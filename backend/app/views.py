@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from django.http import StreamingHttpResponse
+from django.http import HttpResponse
 from django.http import JsonResponse
 
 from datetime import datetime, timedelta
@@ -89,10 +90,29 @@ def gen(camera):
         else: time.sleep(0.05) # Error, wait for the next capture attempt
 
 def video_feed(request):
-    return StreamingHttpResponse(
+    response = StreamingHttpResponse(
         gen(global_camera),
         content_type='multipart/x-mixed-replace; boundary=frame'
     )
+    # Headers
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Headers"] = "skip_zrok_interstitial"
+    #response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response["Pragma"] = "no-cache"
+    response["Expires"] = "0"
+    # Video
+    response["X-Accel-Buffering"] = "no"
+    response["Cache-Control"] = "no-cache, private"
+    return response
+    
+def single_frame(request):
+    frame = global_camera.get_frame()
+    if frame is not None:
+        response = HttpResponse(frame, content_type="image/jpeg")
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Headers"] = "skip_zrok_interstitial"
+        return response
+    return HttpResponse(status=204)
     
 # ===========================================================
 
