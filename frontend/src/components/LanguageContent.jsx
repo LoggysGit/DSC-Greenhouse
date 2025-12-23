@@ -15,7 +15,7 @@ const textContent = [
         "Environment Parameters",
         "Information about us",
         "What is this?",
-        "This is an automatic greenhouse model for the ", // DANA Smart City Project.
+        "This is an automatic greenhouse model for the ",
         "You can observe the growing plants in our greenhouse in real time and also get the actual internal environment parameters.",
         "How it works?",
         "In a greenhouse, plants are planted. We monitor them thanks to a camera and a Databot™ sensor, which give us up-to-date information about the state of the greenhouse. The data is displayed on the website and saved in separate reports, which helps in conducting various experiments and experiences.",
@@ -26,7 +26,8 @@ const textContent = [
         "Dana School, a private school, nurtures students' talents and recognizes the spark within each student. Dana's goal is to instill the value of learning in every student and prepare them for society's future leaders.",
         "Databot™ is presented as a versatile wireless scientific instrument and laboratory designed for studying data, artificial intelligence, and programming within STEM education.",
         "Support Us",
-        "Having donated, you support our project and help us to bring the most thrilling ideas to life. Also, you can suggest your idea or leave a report in our Telegram Bot. We're looking forward to your feedback!",
+        //"Having donated, you support our project and help us to bring the most thrilling ideas to life. Also,
+        "You can suggest your idea or leave a report in our Telegram Bot. We're looking forward to your feedback!",
         "Contacts",
     ],
     [ // Rus
@@ -46,7 +47,8 @@ const textContent = [
         "Частная школа Dana School развивает таланты учащихся и распознает искру в каждом из них. Цель Dana — привить каждому ученику ценность обучения и подготовить их к роли будущих лидеров общества",
         "Databot™ представлен как универсальный беспроводной научный инструмент и лаборатория, предназначенный для изучения данных, искусственного интеллекта и программирования в рамках STEM-образования",
         "Поддержать Нас",
-        "Отправив деньги, вы поддерживаете наш проекти помогаете нам воплотить самые захватывающие идеи в жизнь. К тому же, вы можете предложить вашу идею или оставить отзыв в нашем Telegram боте. Мы очень ценим вашу обратную связь!",
+        //"Отправив деньги, вы поддерживаете наш проекти помогаете нам воплотить самые захватывающие идеи в жизнь. К тому же,
+        "Вы можете предложить вашу идею или оставить отзыв в нашем Telegram боте. Мы очень ценим вашу обратную связь!",
         "Контакты",
     ],
     [
@@ -66,7 +68,8 @@ const textContent = [
         "Dana School жеке мектебі оқушылардың таланттарын дамытып, әрқайсысындағы ұшқынды ашады. Dana-ның мақсаты — әр оқушыға білім алудың құндылығын сіңіріп, оларды қоғамның болашақ көшбасшысы ретінде тәрбиелеу",
         "Databot™ — STEM-білім беру аясында деректерді зерттеу, жасанды интеллект және бағдарламалауды үйренуге арналған әмбебап сымсыз ғылыми құрал және зертхана ретінде таныстырылады",
         "Көмектеседі",
-        "Ақша аудару арқылы сіз біздің жобаны қолдап, ең қызықты идеяларды жүзеге асыруға көмектесесіз. Сонымен қатар, өз идеяңызды ұсынуға немесе пікір қалдыруға біздің Telegram боты арқылы мүмкіндік бар. Біз сіздің кері байланысты жоғары бағалаймыз!",
+        //"Ақша аудару арқылы сіз біздің жобаны қолдап, ең қызықты идеяларды жүзеге асыруға көмектесесіз. Сонымен қатар, 
+        "Өз идеяңызды ұсынуға немесе пікір қалдыруға біздің Telegram боты арқылы мүмкіндік бар. Біз сіздің кері байланысты жоғары бағалаймыз!",
         "Байланыс"
     ]
 ];
@@ -75,10 +78,10 @@ const textContent = [
 
 const participantsDataEng = [
     { type: "spacer"},
-    { name: 'Schelakov Vladimir',   role: 'Project Author, Sponsor' },
+    { name: 'Schelakov Vladimyr',   role: 'Project Author, Sponsor' },
     { name: 'Kassenova Aynash',     role: 'Project Manager'         },
     { name: 'Pastak Olga',          role: 'Biologist, Mentor'       },
-    { name: 'Abdrahmanovna Dinara', role: 'Physist, Mentor'         },
+    { name: 'Abdrakhmanova Dinara', role: 'Physist, Mentor'         },
     { name: 'Shirbekov Yusuf',      role: 'Engineer'                },
     { name: 'Volkov Arseniy',       role: 'Engineer-constructor'    },
     { name: 'Kim Danil',            role: 'Support'                 },
@@ -94,27 +97,27 @@ const participantsDataEng = [
 ];
 const participantsDataRus = [
     { type: "spacer"},
-    { name: 'Щелаков Владимир',   role: 'Автор Проекта, Спонсор'    },
-    { name: 'Кассенова Айнаш',     role: 'Проджект-менеджер'        },
-    { name: 'Пастак Ольга',          role: 'Биолог, Ментор'         },
-    { name: 'Абдрахмановна Динара', role: 'Физик, Ментор'           },
-    { name: 'Ширбеков Юсуф',      role: 'Инженер'                   },
+    { name: 'Щелаков Владимир',     role: 'Автор Проекта, Спонсор'  },
+    { name: 'Кассенова Айнаш',      role: 'Проджект-менеджер'       },
+    { name: 'Пастак Ольга',         role: 'Биолог, Ментор'          },
+    { name: 'Абдрахманова Динара',  role: 'Физик, Ментор'           },
+    { name: 'Ширбеков Юсуф',        role: 'Инженер'                 },
     { name: 'Волков Арсений',       role: 'Инженер-конструктор'     },
     { name: 'Ким Данил',            role: 'Помощник'                },
-    { name: 'Копытин Ярослав',     role: 'Главный Инженер'          },
+    { name: 'Копытин Ярослав',      role: 'Главный Инженер'         },
     { name: 'Мецлер Альберт',       role: 'Главный Разработчик'     },
-    { name: 'Скопа Вячеслав',     role: 'Разработчик'               },
-    { name: 'Пудель Роман',          role: 'Инженер, Разработчик'   },
-    { name: 'Чернов Рустам',       role: 'Разработчик'              },
-    { name: 'Дорофеев Максим',     role: 'Разработчик'              },
-    { name: 'Сембин Амир',      role: 'Биолог'                      },
-    { name: 'Табаев Альжан',      role: 'Биолог'                    },
+    { name: 'Скопа Вячеслав',       role: 'Разработчик'             },
+    { name: 'Пудель Роман',         role: 'Инженер, Разработчик'    },
+    { name: 'Чернов Рустам',        role: 'Разработчик'             },
+    { name: 'Дорофеев Максим',      role: 'Разработчик'             },
+    { name: 'Сембин Амир',          role: 'Биолог'                  },
+    { name: 'Табаев Альжан',        role: 'Биолог'                  },
     { type: "spacer"},
 ];
 const participantsDataKaz = [
     { type: "spacer" },
     { name: 'Щелаков Владимир',     role: 'Жоба авторы, Демеуші'    },
-    { name: 'Кассенова Айнаш',      role: 'Жоба Менеджер'           },
+    { name: 'Кассенова Айнаш',      role: 'Жоба Менеджерi'          },
     { name: 'Пастак Ольга',         role: 'Биолог, Ментор'          },
     { name: 'Абдрахмановна Динара', role: 'Физик, Ментор'           },
     { name: 'Ширбеков Юсуф',        role: 'Инженер'                 },
