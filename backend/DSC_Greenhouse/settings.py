@@ -25,7 +25,7 @@ REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/dist') # React build in root (f
 SECRET_KEY = 'django-insecure-0yc#%=yg8*lp*3bfm!b*@1ru+3hi%)sl*&z72dnb&9d*2o(crh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -36,7 +36,15 @@ ALLOWED_HOSTS = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React dev-server
+    "http://localhost:4173",  # React pre-server
     "http://127.0.0.1:5173",  # Site (EDIT)
+    "https://loggysgit.github.io",
+]
+
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "skip_zrok_interstitial",
 ]
 
 # Application definition
