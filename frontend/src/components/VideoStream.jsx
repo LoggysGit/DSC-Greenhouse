@@ -1,34 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const VideoStream = () => {
-  const [frameUrl, setFrameUrl] = useState("");
+  const [frameUrl, setFrameUrl] = useState(null);
   const baseUrl = "https://dscgapi.share.zrok.io/single_frame/";
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    let isMounted = True;
-    
-    const updateFrame = () => {
-      if (!isMounted) return;
-      // Добавляем timestamp, чтобы браузер не кешировал картинку
-      const newUrl = `${baseUrl}?t=${Date.now()}`;
-      
-      // Предзагрузка кадра, чтобы не было мигания
-      const img = new Image();
-      img.src = newUrl;
-      img.onload = () => {
-        if (isMounted) {
-          setFrameUrl(newUrl);
-          // Как только этот кадр загрузился, сразу запрашиваем следующий. Это создаст максимально возможную плавность (FPS)
-          setTimeout(updateFrame, 60); // ~15-16 FPS
+    isMounted.current = true;
+
+    const fetchFrame = async () => {
+      if (!isMounted.current) return;
+
+      try {
+        const response = await fetch(`${baseUrl}?t=${Date.now()}`, {
+          method: 'GET',
+          headers: {
+            'skip_zrok_interstitial': 'true'
+          }
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const objectUrl = URL.createObjectURL(blob);
+          
+          // Clear URL
+          setFrameUrl(prev => {
+            if (prev) URL.revokeObjectURL(prev);
+            return objectUrl;
+          });
         }
-      };
-      img.onerror = () => {
-        if (isMounted) setTimeout(updateFrame, 1000); // Если ошибка, ждем секунду
-      };
+      } catch (err) {
+        console.error("Frame fetch error:", err);
+      }
+
+      if (isMounted.current) setTimeout(fetchFrame, 20); // 20 ms between requests
     };
 
-    updateFrame();
-    return () => { isMounted = false; };
+    fetchFrame();
+
+    return () => {
+      isMounted.current = false;
+      if (frameUrl) URL.revokeObjectURL(frameUrl);
+    };
   }, []);
 
   return (
