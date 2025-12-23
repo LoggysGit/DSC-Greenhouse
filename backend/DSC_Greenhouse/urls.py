@@ -22,5 +22,6 @@ urlpatterns = [
     path('', views.blank),
     path('adminX/', admin.site.urls),
     path('video_stream/', views.video_feed, name='video_feed'),
+    path('single_frame/', views.single_frame, name='single_frame'),
     path('databot_probe/', views.send_env_params, name='params'),
 ]
