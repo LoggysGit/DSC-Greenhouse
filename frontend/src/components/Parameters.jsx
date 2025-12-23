@@ -1,34 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocalization } from './LocalizationContext.jsx';
 
 const labels =[
-    [
-        "Temperature",
-        "CO2",
-        "Illuminance",
-        "Color",
-        "Humidity",
-        "Sound",
-        "VOC"
-    ], // Eng
-    [
-        "Температура",
-        "CO2",
-        "Освещенность",
-        "Цвет",
-        "Влажность",
-        "Шум",
-        "Орг. частицы"
-    ], // Rus
-    [  
-        "Температура",
-        "СО2",
-        "Жарық",
-        "Түс",
-        "Ылғалдылық",
-        "Шу",
-        "Органикалық бөлшектер"
-    ]  // Kaz
+    ["Temperature", "CO2", "Illuminance", "Color", "Humidity", "Sound", "VOC"], // Eng
+    ["Температура", "CO2", "Освещенность", "Цвет", "Влажность", "Шум", "Орг. частицы"], // Rus
+    ["Температура", "СО2", "Жарық", "Түс", "Ылғалдылық", "Шу", "Органикалық бөлшектер"] // Kaz
 ];
 
 const Parameters = () => {
@@ -37,7 +13,6 @@ const Parameters = () => {
 
     const paramPoint = "https://dscgapi.share.zrok.io/databot_probe/";
 
-    // Состояние хранит последние удачные данные
     const [params, setParams] = useState(null);
     
     const isValidData = (obj) => {
@@ -53,7 +28,14 @@ const Parameters = () => {
     useEffect(() => {
         const interval = setInterval(async () => {
             try {
-                const response = await fetch(paramPoint);
+                const response = await fetch(paramPoint, {
+                    method: 'GET',
+                    headers: {
+                        'skip_zrok_interstitial': 'true',
+                        'Accept': 'application/json'
+                    }
+                });
+
                 if (!response.ok) throw new Error("Server error");
 
                 const urlData = await response.text();
@@ -63,20 +45,17 @@ const Parameters = () => {
                 const lastLine = lines[lines.length - 1];
                 const parsedObject = JSON.parse(lastLine);
 
-                // ОБНОВЛЯЕМ только если данные валидны. Если данные битые, setParams не вызывается, на экране остается старое состояние
                 if (isValidData(parsedObject)) {
                     setParams(parsedObject);
                 }
             } catch (err) {
-                // В случае ошибки (500, пустой ответ, битый JSON) просто ничего не делаем. React сохранит последнее валидное состояние params в памяти.
-                console.log("Waiting for stable data flow...");
+                console.log("Waiting for stable data flow or zrok access...");
             }
         }, 1000);
 
         return () => clearInterval(interval); 
     }, []);
 
-    // Если данных НИ РАЗУ еще не было (самый первый запуск)
     if (!params) {
         return (
             <div id="parameters">
@@ -85,7 +64,6 @@ const Parameters = () => {
         );
     }
 
-    // Как только данные появились один раз, этот блок будет висеть всегда. Если новые данные не приходят (ошибка 500 или битый JSON), здесь просто будут отображаться последние корректные цифры.
     return (
         <div id="parameters">
             <p>{labels[lang_id][0]}: {params.temp}°C</p>
