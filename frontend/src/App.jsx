@@ -96,14 +96,14 @@ function page(lang){
       <h2 id="sponsors-anchor">{textContent[lang][12]}</h2>
       <div id="sponsors-container">
         <div className="sponsor-card" data-aos="fade-up-right">
-          <img src = "/dana-logo.png" alt="Dana School"/>
+          <img src = "./dana-logo.png" alt="Dana School"/>
           <div>
             <h3 onClick={() => { window.location.href = 'https://danaschool.kz/'; }}>DANA School</h3>
             <p>{textContent[lang][13]}</p>
           </div>
         </div>
         <div className="sponsor-card" data-aos="fade-up-left">
-        <img alt="databot" src="/databot-logo.webp" width={"150px"}/>
+        <img alt="databot" src="./databot-logo.webp" width={"150px"}/>
           <div>
             <h3 onClick={() => { window.location.href = 'https://databot.us.com/'; }}>databot <sup>TM</sup></h3>
             <p>{textContent[lang][14]}</p>
