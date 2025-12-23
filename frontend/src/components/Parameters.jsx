@@ -35,7 +35,7 @@ const Parameters = () => {
     const { local } = useLocalization();
     let lang_id = local === "Eng" ? 0 : local === "Rus" ? 1 : 2;
 
-    const paramPoint = "/api/databot_probe/";
+    const paramPoint = "https://dscgapi.share.zrok.io/databot_probe/";
 
     // Состояние хранит последние удачные данные
     const [params, setParams] = useState(null);
