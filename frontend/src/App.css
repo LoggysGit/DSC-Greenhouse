@@ -69,7 +69,7 @@ header *{ padding: 0 10px; }
 #main-container{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center;https://loggysgit.github.io/DSC-Greenhouse/
 }
 #main-container p{
   display: block;
@@ -300,6 +300,8 @@ footer p{
 
     width: 200px;
     height: 300px;
+    
+    font-size: 14px;
   }
   .participant-card img{
     width:57%;
