@@ -2,25 +2,9 @@ import { useLocalization } from './LocalizationContext.jsx';
 
 // ====== HEADER TRANSLATIONS ======
 const headerText = [
-    [
-      "About Us",
-      "Authors",
-      "Sponsors",
-      "Support",
-      "Contacts",
-    ], [
-      "О нас",
-      "Авторы",
-      "Спонсоры",
-      "Поддержка",
-      "Контакты",
-    ], [
-      "Біз туралы",
-      "Авторлар",
-      "Спонсордар",
-      "Көмектеседі",
-      "Байланыс",
-    ]
+    ["About Us", "Authors", "Sponsors", "Support", "Contacts"], 
+    ["О нас", "Авторы", "Спонсоры", "Поддержка", "Контакты" ], 
+    ["Біз туралы", "Авторлар", "Спонсордар", "Көмектеседі", "Байланыс"]
 ];
 
 // ====== MAIN WEBSITE TEXT CONTENT ======
@@ -110,7 +94,7 @@ const participantsDataEng = [
 ];
 const participantsDataRus = [
     { type: "spacer"},
-    { name: 'Шелаков Владимир',   role: 'Автор Проекта, Спонсор'    },
+    { name: 'Щелаков Владимир',   role: 'Автор Проекта, Спонсор'    },
     { name: 'Кассенова Айнаш',     role: 'Проджект-менеджер'        },
     { name: 'Пастак Ольга',          role: 'Биолог, Ментор'         },
     { name: 'Абдрахмановна Динара', role: 'Физик, Ментор'           },
@@ -129,7 +113,7 @@ const participantsDataRus = [
 ];
 const participantsDataKaz = [
     { type: "spacer" },
-    { name: 'Шелаков Владимир',     role: 'Жоба авторы, Демеуші'    },
+    { name: 'Щелаков Владимир',     role: 'Жоба авторы, Демеуші'    },
     { name: 'Кассенова Айнаш',      role: 'Жоба Менеджер'           },
     { name: 'Пастак Ольга',         role: 'Биолог, Ментор'          },
     { name: 'Абдрахмановна Динара', role: 'Физик, Ментор'           },
