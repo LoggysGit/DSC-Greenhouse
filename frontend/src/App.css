@@ -162,7 +162,7 @@ header *{ padding: 0 10px; }
 #burger-menu button{ width: 20%; margin: 10px}
 
 #participants-viewport {
-  width: 77%;
+  width: 63%;
   overflow: hidden;
   position: relative;
 }
@@ -272,6 +272,10 @@ footer p{
 }
 
 @media (max-width:768px) {  
+  #main-container p{
+    font-size: 14px;
+  }
+
   #participants-viewport { 
     width: 70%; 
     overflow: hidden; position: relative; 
@@ -300,8 +304,6 @@ footer p{
 
     width: 200px;
     height: 300px;
-    
-    font-size: 14px;
   }
   .participant-card img{
     width:57%;
