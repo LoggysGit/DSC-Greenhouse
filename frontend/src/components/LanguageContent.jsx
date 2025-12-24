@@ -78,7 +78,7 @@ const textContent = [
 
 const participantsDataEng = [
     { type: "spacer"},
-    { name: 'Schelakov Vladimyr',   role: 'Project Author, Sponsor' },
+    { name: 'Schelakov Vladimir',   role: 'Project Author, Sponsor' },
     { name: 'Kassenova Aynash',     role: 'Project Manager'         },
     { name: 'Pastak Olga',          role: 'Biologist, Mentor'       },
     { name: 'Abdrakhmanova Dinara', role: 'Physist, Mentor'         },
