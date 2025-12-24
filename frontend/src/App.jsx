@@ -128,7 +128,7 @@ function page(lang){
       <h2 id="contacts-anchor">{textContent[lang][17]}</h2>
       <div id="contacts-container" data-aos="fade-up" data-aos-offset="404013423413400%">
         <div className="contact-block" id="cb-1">
-          <p>Vladimyr S: <a href="https://instagram.com/edu.projekt">edu.projekt</a></p>
+          <p>Vladimir S: <a href="https://instagram.com/edu.projekt">edu.projekt</a></p>
           <p>Telegram Bot: <a href="https://t.me/dsc_greeenhouse_feedback_bot">DCSGreenhouseBot</a></p>
           <p>Made via <a href="https://github.com">GitHub</a></p>
           <p>DatabotDANA Team</p>
