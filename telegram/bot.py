@@ -1,7 +1,7 @@
 from datetime import datetime
 import telebot
 
-TOKEN = '8343146721:AAGXA3xlCbewBTPXHi6xPBw7qd5U5UtlynQ'
+TOKEN = 
 GROUP_ID = '-1003569345200'
 
 message_type = ["MESSAGE", "BUG REPORT", "IDEA"]
